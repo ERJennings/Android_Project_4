@@ -1,9 +1,11 @@
 package com.example.android_project_3;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceManager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         myPreference=PreferenceManager.getDefaultSharedPreferences(this);
 
         listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            //Removed override statement since not part of example
+            @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
                 if (key.equals("listPref")) {
                     url = myPreference.getString("listPref","https://www.pcs.cnu.edu/~kperkins/pets/pets.json");
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         displayPet(jsonArray.getJSONObject(0).getString("file"));
                     }
-                    catch (JSONException e) {
+                    catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             displayPet(jsonArray.getJSONObject(0).getString("file"));
         }
-        catch (JSONException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -104,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void doPreferences() {
-        Intent myintent = new Intent(MainActivity.this, SettingsActivity.class);
+        Intent myintent = new Intent(this, SettingsActivity.class);
         startActivity(myintent);
     }
 
@@ -128,9 +130,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupSimpleSpinner() {
 
-        spinner = (Spinner)findViewById(R.id.spinner);
+        //spinner = (Spinner)findViewById(R.id.spinner);
 
-        ArrayList<String> availablePets = new ArrayList<>();
+        spinner.setEnabled(true);
+        spinner.setVisibility(View.VISIBLE);
+
+        List<String> availablePets = new ArrayList<>();
 
         for (int i = 0; i < numberentries; i++) {
             try {
@@ -170,8 +175,9 @@ public class MainActivity extends AppCompatActivity {
     public void displayPet(String file) {
         String petData = "pets.json";
         loc = url.substring(0, url.length()-petData.length()) + file;
-        WebImageView_KP display = findViewById(R.id.imageView);
+        WebImageView_KP display = (WebImageView_KP)findViewById(R.id.imageView);
         display.setImageUrl(loc);
+        findViewById(R.id.imageView).setVisibility(View.VISIBLE);
     }
 
     public void imageDownload() {
@@ -192,6 +198,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void filesNotFound() {
+        String message = "Error";
+        new AlertDialog.Builder(this).setMessage(message).setPositiveButton(":(", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        }).show();
 
     }
 
