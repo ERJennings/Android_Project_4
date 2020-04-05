@@ -100,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
     private void setupSimpleSpinner() {
 
         spinner = (Spinner)findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.numbers,R.layout.spinner_item_simple);
 
         ArrayList<String> availablePets = new ArrayList<>();
 
@@ -114,17 +113,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        //bind the spinner to the datasource managed by adapter
+        //Changed CharList from example to string
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, availablePets);
         spinner.setAdapter(adapter);
-        //respond when spinner clicked
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public static final int SELECTED_ITEM = 0;
 
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int pos, long rowid) {
                 if (arg0.getChildAt(SELECTED_ITEM) != null) {
-                    ((TextView) arg0.getChildAt(SELECTED_ITEM)).setTextColor(Color.WHITE);
-                    Toast.makeText(MainActivity.this, (String) arg0.getItemAtPosition(pos), Toast.LENGTH_SHORT).show();
+                    //TODO create method to set pet image
                 }
             }
 
