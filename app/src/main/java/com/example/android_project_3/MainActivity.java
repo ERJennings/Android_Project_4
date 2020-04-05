@@ -5,13 +5,21 @@ import androidx.preference.PreferenceManager;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
 
-    TextView tv;
+    //TextView tv;
+    JSONArray jsonArray;
+    private static final String TAG = "ParseJSON";
+    int numberentries = -1;
+    //int currententry = -1;
     private SharedPreferences myPreference;
     private SharedPreferences.OnSharedPreferenceChangeListener listener = null;
 
@@ -51,7 +59,22 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    protected void processJSON(String result){
-        tv.setText(result);
+    public void processJSON(String string) {
+
+        try {
+            JSONObject jsonobject = new JSONObject(string);
+            jsonArray = jsonobject.getJSONArray("pets");
+
+            //Removed indenting
+            Log.d(TAG,jsonArray.toString());
+            numberentries = jsonArray.length();
+
+            //TODO populate spinner
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
+
 }
