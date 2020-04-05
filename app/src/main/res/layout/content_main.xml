@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.keith.test_networking_lib.WebImageView_KP
+    <com.example.android_project_3.WebImageView_KP
         android:id="@+id/imageView"
-        class="com.example.keith.test_networking_lib.WebImageView_KP"
+        class="com.example.android_project_3.WebImageView_KP"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
