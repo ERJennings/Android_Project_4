@@ -2,6 +2,7 @@
     <string name="app_name">Android_Project_3</string>
 
     <string name="placeholder">Placeholder</string>
+    <string name="action_settings">Settings</string>
 
 
 </resources>
