@@ -1,6 +1,7 @@
 package com.example.android_project_3;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
@@ -42,16 +43,41 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        spinner = (Spinner)findViewById(R.id.spinner);
+
         myPreference=PreferenceManager.getDefaultSharedPreferences(this);
 
         listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             //Removed override statement since not part of example
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
                 if (key.equals("listPref")) {
-                    //loadImage();
+                    url = myPreference.getString("listPref","https://www.pcs.cnu.edu/~kperkins/pets/pets.json");
+                    imageDownload();
+
+                    try {
+                        displayPet(jsonArray.getJSONObject(0).getString("file"));
+                    }
+                    catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         };
+
+        myPreference.registerOnSharedPreferenceChangeListener(listener);
+        url = myPreference.getString("listPref","https://www.pcs.cnu.edu/~kperkins/pets/pets.json");
+        imageDownload();
+        try {
+            displayPet(jsonArray.getJSONObject(0).getString("file"));
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
