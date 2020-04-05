@@ -3,6 +3,7 @@ package com.example.android_project_3;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,10 +54,18 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //TODO open SettingsActivity
+        if (id == R.id.action_settings) {
+            doPreferences();
+            return true;
+        }
 
         //all else fails let super handle it
         return super.onOptionsItemSelected(item);
+    }
+
+    private void doPreferences() {
+        Intent myintent = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(myintent);
     }
 
     public void processJSON(String string) {
