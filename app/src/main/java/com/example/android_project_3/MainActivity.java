@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     Spinner spinner;
     private String url;
     private String loc;
+    ConnectivityCheck checkNetwork;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +146,22 @@ public class MainActivity extends AppCompatActivity {
         loc = url.substring(0, url.length()-petData.length()) + file;
         WebImageView_KP display = findViewById(R.id.imageView);
         display.setImageUrl(loc);
+    }
+
+    public void imageDownload() {
+        checkNetwork = new ConnectivityCheck(this);
+        boolean netReach = checkNetwork.isNetworkReachable();
+        boolean wifiReach = checkNetwork.isWifiReachable();
+
+        numberentries = 0;
+        jsonArray = null;
+
+        if (netReach == true || wifiReach == true) {
+            DownloadTask_KP download = new DownloadTask_KP(this);
+            download.execute(url);
+        }
+
+        //TODO add error checking
     }
 
 }
