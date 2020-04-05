@@ -5,11 +5,17 @@ import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -23,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     //int currententry = -1;
     private SharedPreferences myPreference;
     private SharedPreferences.OnSharedPreferenceChangeListener listener = null;
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,12 +85,39 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG,jsonArray.toString());
             numberentries = jsonArray.length();
 
-            //TODO populate spinner
+            setupSimpleSpinner();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    private void setupSimpleSpinner() {
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.numbers,R.layout.spinner_item_simple);
+
+        //get a reference to the spinner
+        spinner = (Spinner)findViewById(R.id.spinner);
+
+        //bind the spinner to the datasource managed by adapter
+        spinner.setAdapter(adapter);
+        //respond when spinner clicked
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public static final int SELECTED_ITEM = 0;
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int pos, long rowid) {
+                if (arg0.getChildAt(SELECTED_ITEM) != null) {
+                    ((TextView) arg0.getChildAt(SELECTED_ITEM)).setTextColor(Color.WHITE);
+                    Toast.makeText(MainActivity.this, (String) arg0.getItemAtPosition(pos), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
     }
 
 }

@@ -4,5 +4,12 @@
     <string name="placeholder">Placeholder</string>
     <string name="action_settings">Settings</string>
 
+    <string-array name="numbers">
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+        <item>Four</item>
+    </string-array>
+
 
 </resources>
