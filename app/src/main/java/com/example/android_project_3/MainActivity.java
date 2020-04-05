@@ -160,8 +160,13 @@ public class MainActivity extends AppCompatActivity {
             DownloadTask_KP download = new DownloadTask_KP(this);
             download.execute(url);
         }
+        else {
+            filesNotFound();
+        }
+    }
 
-        //TODO add error checking
+    public void filesNotFound() {
+
     }
 
 }
