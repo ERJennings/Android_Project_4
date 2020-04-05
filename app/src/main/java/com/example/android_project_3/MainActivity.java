@@ -18,7 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -95,10 +99,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupSimpleSpinner() {
 
+        spinner = (Spinner)findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.numbers,R.layout.spinner_item_simple);
 
-        //get a reference to the spinner
-        spinner = (Spinner)findViewById(R.id.spinner);
+        ArrayList<String> availablePets = new ArrayList<>();
+
+        for (int i = 0; i < numberentries; i++) {
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                availablePets.add(jsonObject.getString("name"));
+            }
+            catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
 
         //bind the spinner to the datasource managed by adapter
         spinner.setAdapter(adapter);
