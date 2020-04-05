@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences myPreference;
     private SharedPreferences.OnSharedPreferenceChangeListener listener = null;
     Spinner spinner;
+    private String url;
+    private String loc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +125,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int pos, long rowid) {
                 if (arg0.getChildAt(SELECTED_ITEM) != null) {
-                    //TODO create method to set pet image
+                    try {
+                        displayPet(jsonArray.getJSONObject(pos).getString("file"));
+                    }
+                    catch (JSONException e){
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -131,6 +138,13 @@ public class MainActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
+    }
+
+    public void displayPet(String file) {
+        String petData = "pets.json";
+        loc = url.substring(0, url.length()-petData.length()) + file;
+        WebImageView_KP display = findViewById(R.id.imageView);
+        display.setImageUrl(loc);
     }
 
 }
