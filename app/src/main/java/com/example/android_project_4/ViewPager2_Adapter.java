@@ -141,7 +141,7 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
             petNameList.add(petName);
             petFileList.add(source);
         }
-        
+
         Download_Image_Task downloadTask = new Download_Image_Task();
         count = 0;
         while (count < jsonArray.length()){

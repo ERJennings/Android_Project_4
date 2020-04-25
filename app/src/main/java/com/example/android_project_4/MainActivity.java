@@ -115,8 +115,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG,jsonArray.toString());
             numberentries = jsonArray.length();
 
-            //TODO populate viewpager2
-            //setupSimpleSpinner();
+            csa.getJSONFiles(jsonArray, url);
 
         } catch (Exception e) {
             e.printStackTrace();
