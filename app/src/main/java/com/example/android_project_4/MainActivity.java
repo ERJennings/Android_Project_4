@@ -22,11 +22,9 @@ public class MainActivity extends AppCompatActivity {
 
     JSONArray jsonArray;
     private static final String TAG = "ParseJSON";
-    int numberentries = -1;
     private SharedPreferences myPreference;
-    private SharedPreferences.OnSharedPreferenceChangeListener listener = null;
+    private SharedPreferences.OnSharedPreferenceChangeListener listener;
     private String url;
-    private String loc;
     ConnectivityCheck checkNetwork;
 
     ViewPager2 vp;
@@ -37,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -101,14 +99,18 @@ public class MainActivity extends AppCompatActivity {
     public void processJSON(String string) {
 
         try {
-            JSONObject jsonobject = new JSONObject(string);
-            jsonArray = jsonobject.getJSONArray("pets");
+            if (string != null) {
+                JSONObject jsonobject = new JSONObject(string);
+                jsonArray = jsonobject.getJSONArray("pets");
 
-            //Removed indenting
-            Log.d(TAG,jsonArray.toString());
-            numberentries = jsonArray.length();
+                //Removed indenting
+                Log.d(TAG, jsonArray.toString());
 
-            csa.getJSONFiles(jsonArray, url);
+                csa.getJSONFiles(jsonArray, url);
+            }
+            else {
+                csa.getJSONFiles(null, url);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,8 +122,6 @@ public class MainActivity extends AppCompatActivity {
         checkNetwork = new ConnectivityCheck(this);
         boolean netReach = checkNetwork.isNetworkReachable();
         boolean wifiReach = checkNetwork.isWifiReachable();
-
-        numberentries = 0;
         jsonArray = null;
 
         if (netReach == true || wifiReach == true) {
