@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceManager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,17 +27,17 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    //TextView tv;
     JSONArray jsonArray;
     private static final String TAG = "ParseJSON";
     int numberentries = -1;
-    //int currententry = -1;
     private SharedPreferences myPreference;
     private SharedPreferences.OnSharedPreferenceChangeListener listener = null;
-    Spinner spinner;
     private String url;
     private String loc;
     ConnectivityCheck checkNetwork;
+
+    ViewPager2 vp;
+    ViewPager2_Adapter csa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        spinner = (Spinner)findViewById(R.id.spinner);
 
         myPreference=PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -58,12 +58,6 @@ public class MainActivity extends AppCompatActivity {
                     url = myPreference.getString("listPref","https://www.pcs.cnu.edu/~kperkins/pets/pets.json");
                     imageDownload();
 
-                    try {
-                        displayPet(jsonArray.getJSONObject(0).getString("file"));
-                    }
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }
                 }
             }
         };
@@ -71,12 +65,7 @@ public class MainActivity extends AppCompatActivity {
         myPreference.registerOnSharedPreferenceChangeListener(listener);
         url = myPreference.getString("listPref","https://www.pcs.cnu.edu/~kperkins/pets/pets.json");
         imageDownload();
-        try {
-            displayPet(jsonArray.getJSONObject(0).getString("file"));
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        
     }
 
     @Override
@@ -117,64 +106,13 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG,jsonArray.toString());
             numberentries = jsonArray.length();
 
-            setupSimpleSpinner();
+            //TODO populate viewpager2
+            //setupSimpleSpinner();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-    }
-
-    private void setupSimpleSpinner() {
-
-        //spinner = (Spinner)findViewById(R.id.spinner);
-
-        spinner.setEnabled(true);
-        spinner.setVisibility(View.VISIBLE);
-
-        List<String> availablePets = new ArrayList<>();
-
-        for (int i = 0; i < numberentries; i++) {
-            try {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                availablePets.add(jsonObject.getString("name"));
-            }
-            catch (JSONException e){
-                e.printStackTrace();
-            }
-        }
-
-        //Changed CharList from example to string
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, availablePets);
-        spinner.setAdapter(adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public static final int SELECTED_ITEM = 0;
-
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int pos, long rowid) {
-                if (arg0.getChildAt(SELECTED_ITEM) != null) {
-                    try {
-                        displayPet(jsonArray.getJSONObject(pos).getString("file"));
-                    }
-                    catch (JSONException e){
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-            }
-        });
-    }
-
-    public void displayPet(String file) {
-        String petData = "pets.json";
-        loc = url.substring(0, url.length()-petData.length()) + file;
-        WebImageView_KP display = (WebImageView_KP)findViewById(R.id.imageView);
-        display.setImageUrl(loc);
-        findViewById(R.id.imageView).setVisibility(View.VISIBLE);
     }
 
     public void imageDownload() {
