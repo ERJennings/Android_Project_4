@@ -27,8 +27,7 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
         public PagerViewHolder(@NonNull View itemView) {
             super(itemView);
             iv = (ImageView)itemView.findViewById(R.id.imageView);
-            //TODO assign textview
-            //tv = (TextView)itemView.findViewById(R.id.tv);
+            tv = (TextView)itemView.findViewById(R.id.tv);
         }
     }
 
