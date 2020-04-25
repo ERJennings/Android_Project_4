@@ -28,7 +28,7 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
     private static ArrayList<Bitmap> petPictureList;
     private final Context ctx;
     private final LayoutInflater li;
-    private int[] image_resources;// = { R.drawable.p0,R.drawable.p1,R.drawable.p2,R.drawable.p3,R.drawable.p4,R.drawable.p5 };
+    private int[] image_resources = { R.drawable.error};
 
     class PagerViewHolder extends RecyclerView.ViewHolder {
         private static final int UNINITIALIZED = -1;
@@ -110,8 +110,7 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
         PagerViewHolder viewHolder = (PagerViewHolder) holder;
 
         //set to some default image
-        //TODO find an error image
-        //viewHolder.iv.setImageResource(R.drawable.error);
+        viewHolder.iv.setImageResource(R.drawable.error);
         viewHolder.tv.setText("Image : " + position);
         viewHolder.position=position;       //remember which image this view is bound to
 
