@@ -22,6 +22,7 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
 
     JSONArray jsonArray;
     private String userDataSource;
+    private int count;
     private ArrayList<String> petFileList;
     private ArrayList<String> petNameList;
     private static ArrayList<Bitmap> petPictureList;
@@ -140,8 +141,13 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
             petNameList.add(petName);
             petFileList.add(source);
         }
-
-        //TODO actually download the bitmap somehow, need to find an example somewhere
+        
+        Download_Image_Task downloadTask = new Download_Image_Task();
+        count = 0;
+        while (count < jsonArray.length()){
+            downloadTask.execute(petFileList.get(count));
+            count++;
+        }
 
         notifyDataSetChanged();
 
