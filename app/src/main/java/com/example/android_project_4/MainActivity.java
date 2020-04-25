@@ -65,7 +65,15 @@ public class MainActivity extends AppCompatActivity {
         myPreference.registerOnSharedPreferenceChangeListener(listener);
         url = myPreference.getString("listPref","https://www.pcs.cnu.edu/~kperkins/pets/pets.json");
         imageDownload();
-        
+
+        //get a ref to the viewpager
+        vp=findViewById(R.id.view_pager);
+        //create an instance of the swipe adapter
+        csa = new ViewPager2_Adapter(this);
+
+        //set this viewpager to the adapter
+        vp.setAdapter(csa);
+
     }
 
     @Override
