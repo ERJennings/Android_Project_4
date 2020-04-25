@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 if (key.equals("listPref")) {
                     url = myPreference.getString("listPref","https://www.pcs.cnu.edu/~kperkins/pets/pets.json");
                     imageDownload();
+                    csa.notifyDataSetChanged();
 
                 }
             }
