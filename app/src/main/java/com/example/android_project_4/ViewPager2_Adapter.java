@@ -1,6 +1,7 @@
 package com.example.android_project_4;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
+
 public class ViewPager2_Adapter extends RecyclerView.Adapter {
+
+    JSONArray jsonArray;
+    private String userDataSource;
+    private ArrayList<String> petFileList;
+    private ArrayList<String> petNameList;
+    private static ArrayList<Bitmap> petPictureList;
     private final Context ctx;
     private final LayoutInflater li;
     private int[] image_resources;// = { R.drawable.p0,R.drawable.p1,R.drawable.p2,R.drawable.p3,R.drawable.p4,R.drawable.p5 };
@@ -111,5 +123,27 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
     public int getItemCount() {
         //the size of the collection that contains the items we want to display
         return image_resources.length;
+    }
+
+    public void getJSONFiles(JSONArray jsonData, String dataSource) throws JSONException {
+        jsonArray = jsonData;
+        userDataSource = dataSource;
+        String jsonName = "pets.json";
+        petFileList = new ArrayList<>();
+        petNameList = new ArrayList<>();
+        petPictureList = new ArrayList<>();
+
+        for(int i = 0; i< jsonArray.length(); i++){
+            String petFile = jsonData.getJSONObject(i).getString("file");
+            String source = userDataSource.substring(0, userDataSource.length() - jsonName.length()) + petFile;
+            String petName = jsonData.getJSONObject(i).getString("name");
+            petNameList.add(petName);
+            petFileList.add(source);
+        }
+
+        //TODO actually download the bitmap somehow, need to find an example somewhere
+
+        notifyDataSetChanged();
+
     }
 }
