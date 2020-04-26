@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/imageView"
@@ -11,35 +12,24 @@
     <TextView
         android:id="@+id/tv"
         android:layout_width="match_parent"
-
-        android:text="sample text"
+        android:text=""
         android:textSize="60dp"
         android:textStyle="bold"
         android:gravity="center"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_height="120dp"
-        android:background="#33777777"/>
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="match_parent"
-
-        android:text="sample text"
-        android:textSize="60dp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_height="120dp"
-        android:background="#33777777"/>
+        android:background="#33777777"
+        app:layout_constraintBottom_toTopOf="@+id/tv2"/>
     <TextView
         android:id="@+id/tv2"
         android:layout_width="match_parent"
-
-        android:text="sample text"
+        android:text=""
         android:textSize="60dp"
         android:textStyle="bold"
         android:gravity="center"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_height="120dp"
-        android:background="#33777777"/>
+        android:background="#33777777"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

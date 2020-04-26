@@ -19,13 +19,13 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 public class ViewPager2_Adapter extends RecyclerView.Adapter {
+    private static final String TAG = "ParseJSON";
 
     JSONArray jsonArray;
     private String userDataSource;
     private int count;
     private ArrayList<String> petFileList;
     private ArrayList<String> petNameList;
-    private static ArrayList<Bitmap> petPictureList;
     private final Context ctx;
     private final LayoutInflater li;
     private int[] image_resources = { R.drawable.error};
@@ -140,24 +140,25 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
         String jsonName = "pets.json";
         petFileList = new ArrayList<>();
         petNameList = new ArrayList<>();
-        petPictureList = new ArrayList<>();
+        if (jsonArray != null) {
 
-        for(int i = 0; i< jsonArray.length(); i++){
-            String petFile = jsonData.getJSONObject(i).getString("file");
-            String source = userDataSource.substring(0, userDataSource.length() - jsonName.length()) + petFile;
-            String petName = jsonData.getJSONObject(i).getString("name");
-            petNameList.add(petName);
-            petFileList.add(source);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                String petFile = jsonData.getJSONObject(i).getString("file");
+                String source = userDataSource.substring(0, userDataSource.length() - jsonName.length()) + petFile;
+                String petName = jsonData.getJSONObject(i).getString("name");
+                petNameList.add(petName);
+                petFileList.add(source);
+            }
+
+            Download_Image_Task downloadTask = new Download_Image_Task();
+            count = 0;
+            while (count < jsonArray.length()) {
+                downloadTask.execute(petFileList.get(count));
+                count++;
+            }
+
+            notifyDataSetChanged();
         }
-
-        Download_Image_Task downloadTask = new Download_Image_Task();
-        count = 0;
-        while (count < jsonArray.length()){
-            downloadTask.execute(petFileList.get(count));
-            count++;
-        }
-
-        notifyDataSetChanged();
 
     }
 }
