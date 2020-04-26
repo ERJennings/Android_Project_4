@@ -55,6 +55,8 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
         //is still what the viewholder wants
         private int original_position;
 
+        Download_Image_Task downloadTask = new Download_Image_Task();
+
         public GetImage(PagerViewHolder myVh) {
             //hold on to a reference to this viewholder
             //note that its contents (specifically iv) may change
@@ -67,11 +69,12 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
         protected Void doInBackground(Void... params) {
 
             //just sleep for a bit
-            try {
-                Thread.sleep(2000); //sleep for 2 seconds
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            //Seemed unnecessary, might add back later
+//            try {
+//                Thread.sleep(2000); //sleep for 2 seconds
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
             return null;
         }
         @Override
@@ -80,18 +83,26 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
             // then the view has been recycled and is being used by another
             // number DO NOT MODIFY
             if (this.myVh.position == this.original_position){
+                if (jsonArray != null) {
+                    downloadTask.execute(petFileList.get(this.myVh.position));
+                    myVh.tv.setText(petNameList.get(this.myVh.position));
+                    //I'd rather do this by setting the view invisible but it won't work for some reason
+                    myVh.tv.setText("");
+                }
+                else {
+                    PagerViewHolder.iv.setImageResource(R.drawable.error);
+                    myVh.tv.setText("");
+                    myVh.tv2.setText("There was an error retrieving the data");
+                }
                 //still valid
                 //set the result on the main thread
-                myVh.iv.setImageResource(image_resources[this.myVh.position ]);
-                myVh.tv.setText(petNameList.get(this.myVh.position));
-                //I'd rather do this by setting the view invisible but it won't work for some reason
-                myVh.tv.setText("");
+                //myVh.iv.setImageResource(image_resources[this.myVh.position ]);
+
             }
             else {
-                //Toast.makeText(ViewPager2_Adapter.this.ctx, "YIKES! Recycler view reused, my result is useless", Toast.LENGTH_SHORT).show();
-                myVh.iv.setImageResource(R.drawable.error);
-                myVh.tv.setText("");
-                myVh.tv2.setText("There was an error retrieving the data");
+                Toast.makeText(ViewPager2_Adapter.this.ctx, "YIKES! Recycler view reused, my result is useless", Toast.LENGTH_SHORT).show();
+                //myVh.iv.setImageResource(R.drawable.error);
+
             }
         }
     }
