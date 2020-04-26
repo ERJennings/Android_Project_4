@@ -131,7 +131,8 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
 
         //set to some default image
         viewHolder.iv.setImageResource(R.drawable.error);
-        viewHolder.tv.setText("Image : " + position);
+        viewHolder.tv.setText("");
+        viewHolder.tv2.setText(R.string.placeholder);
         viewHolder.position=position;       //remember which image this view is bound to
 
         //launch a thread to 'retreive' the image
@@ -142,7 +143,12 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         //the size of the collection that contains the items we want to display
-        return image_resources.length;
+        if (jsonArray != null) {
+            return jsonArray.length();
+        }
+        else {
+            return image_resources.length;
+        }
     }
 
     public void getJSONFiles(JSONArray jsonData, String dataSource) throws JSONException {
