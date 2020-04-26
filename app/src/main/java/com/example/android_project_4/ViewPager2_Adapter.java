@@ -85,7 +85,7 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
             if (this.myVh.position == this.original_position){
                 if (jsonArray != null) {
                     downloadTask.execute(petFileList.get(this.myVh.position));
-                    myVh.tv.setText(petNameList.get(this.myVh.position));
+                    myVh.tv2.setText(petNameList.get(this.myVh.position));
                     //I'd rather do this by setting the view invisible but it won't work for some reason
                     myVh.tv.setText("");
                 }
