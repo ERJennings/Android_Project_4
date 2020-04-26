@@ -167,12 +167,12 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
                 petFileList.add(source);
             }
 
-            Download_Image_Task downloadTask = new Download_Image_Task();
-            count = 0;
-            while (count < jsonArray.length()) {
-                downloadTask.execute(petFileList.get(count));
-                count++;
-            }
+//            Download_Image_Task downloadTask = new Download_Image_Task();
+//            count = 0;
+//            while (count < jsonArray.length()) {
+//                downloadTask.execute(petFileList.get(count));
+//                count++;
+//            }
 
             notifyDataSetChanged();
         }

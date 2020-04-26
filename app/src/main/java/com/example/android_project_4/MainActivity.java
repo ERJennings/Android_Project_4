@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
 
 
         myPreference=PreferenceManager.getDefaultSharedPreferences(this);
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void filesNotFound() {
-        String message = "Error";
+        String message = "No internet connection";
         new AlertDialog.Builder(this).setMessage(message).setPositiveButton(":(", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

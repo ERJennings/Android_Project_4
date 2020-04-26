@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Android_Project_4</string>
 
-    <string name="placeholder">Data Source</string>
+    <string name="placeholder">Name not found</string>
     <string name="action_settings">Settings</string>
 
     <string-array name="numbers">
