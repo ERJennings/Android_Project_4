@@ -83,9 +83,16 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
                 //still valid
                 //set the result on the main thread
                 myVh.iv.setImageResource(image_resources[this.myVh.position ]);
+                myVh.tv.setText(petNameList.get(this.myVh.position));
+                //I'd rather do this by setting the view invisible but it won't work for some reason
+                myVh.tv.setText("");
             }
-            else
-                Toast.makeText(ViewPager2_Adapter.this.ctx,"YIKES! Recycler view reused, my result is useless", Toast.LENGTH_SHORT).show();
+            else {
+                //Toast.makeText(ViewPager2_Adapter.this.ctx, "YIKES! Recycler view reused, my result is useless", Toast.LENGTH_SHORT).show();
+                myVh.iv.setImageResource(R.drawable.error);
+                myVh.tv.setText("");
+                myVh.tv2.setText("There was an error retrieving the data");
+            }
         }
     }
 
