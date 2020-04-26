@@ -34,6 +34,7 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
         private static final int UNINITIALIZED = -1;
         ImageView iv;
         TextView tv;
+        TextView tv2;
         int position=UNINITIALIZED;     //start off uninitialized, set it when we are populating
         //with a view in onBindViewHolder
 
@@ -41,6 +42,7 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
             super(itemView);
             iv = (ImageView)itemView.findViewById(R.id.imageView);
             tv = (TextView)itemView.findViewById(R.id.tv);
+            tv2 = (TextView)itemView.findViewById(R.id.tv2);
         }
     }
 
