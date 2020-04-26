@@ -30,9 +30,9 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
     private final LayoutInflater li;
     private int[] image_resources = { R.drawable.error};
 
-    class PagerViewHolder extends RecyclerView.ViewHolder {
+    static class PagerViewHolder extends RecyclerView.ViewHolder {
         private static final int UNINITIALIZED = -1;
-        ImageView iv;
+        static ImageView iv;
         TextView tv;
         TextView tv2;
         int position=UNINITIALIZED;     //start off uninitialized, set it when we are populating
@@ -160,5 +160,9 @@ public class ViewPager2_Adapter extends RecyclerView.Adapter {
             notifyDataSetChanged();
         }
 
+    }
+
+    public static void getImage(Bitmap result) {
+        PagerViewHolder.iv.setImageBitmap(result);
     }
 }

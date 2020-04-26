@@ -87,6 +87,7 @@ public class Download_Image_Task extends AsyncTask<String, Void, Bitmap> {
 
     @Override
     protected void onPostExecute(Bitmap result) {
+        ViewPager2_Adapter.getImage(result);
     }
 
     /*
